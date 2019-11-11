@@ -10,3 +10,8 @@ class Profile(models.Model):
     game_won = models.IntegerField()
     nick_name = models.CharField(max_length=50, null=False)
     points = models.IntegerField()
+    '''
+    class Meta:
+        app_name = 'fullapp'
+        db_table = 'fullapp_profile'
+    '''
