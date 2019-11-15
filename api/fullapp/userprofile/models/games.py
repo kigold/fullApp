@@ -9,8 +9,7 @@ class Game(models.Model):
     home_score = models.IntegerField()
     home_team_id = models.IntegerField()
     penalty_shootout = models.BooleanField()  
-    '''
+    
     class Meta:
-        app_name = 'fullapp'
+        app_label = 'userprofile'
         db_table = 'fullapp_game'
-    '''
