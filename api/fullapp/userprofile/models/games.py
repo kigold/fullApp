@@ -8,7 +8,8 @@ class Game(models.Model):
     home_user_id = models.IntegerField()
     home_score = models.IntegerField()
     home_team_id = models.IntegerField()
-    penalty_shootout = models.BooleanField()  
+    penalty_shootout = models.BooleanField() 
+    date_played = models.DateTimeField(null=True, blank=True)
     
     class Meta:
         app_label = 'userprofile'
