@@ -21,7 +21,8 @@ from rest_framework import routers
 from fullapp.userprofile import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls)
+    # path('', include('userprofile.urls'))
 ]
 
 router = routers.DefaultRouter()

@@ -1,4 +1,4 @@
-from fullapp.userprofile.models.games import Game
+from .game import Game
 from django.db import models
 
 
