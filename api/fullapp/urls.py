@@ -19,12 +19,13 @@ from django.conf.urls import url
 
 from django.urls import include, path
 from rest_framework import routers
-from fullapp.userprofile import views
-from fullapp.userprofile import views as core_views
+from .userprofile import views
+from .userprofile import views as core_views
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls)
-    # path('', include('userprofile.urls'))
+    path('admin/', admin.site.urls),
+    path('', include(views))
 ]
 
 router = routers.DefaultRouter()

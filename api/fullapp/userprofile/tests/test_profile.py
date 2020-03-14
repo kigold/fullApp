@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
-from .models import Songs
+from ..models import Profile
 from .serializers import ProfileSerializer
 
 
@@ -9,9 +9,9 @@ class BaseViewTest(APITestCase):
     client = APIClient()
 
     @staticmethod
-    def create_song(title="", artist=""):
-        if title != "" and artist != "":
-            Songs.objects.create(title=title, artist=artist)
+    def create_profile(email="kingsleybox@yahoo.com", nick_name="kaycee"):
+        if email != "" and nick_name != "":
+            Profile.objects.create(email, nick_name)
 
     def setUp(self):
         # add test data
