@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 from django.conf import settings
+from .team import Team
 
 
 class User(AbstractUser):
@@ -28,7 +29,7 @@ class Profile(models.Model):
                                 on_delete=models.CASCADE,
                                 related_name='profile')
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    fav_team_id = models.IntegerField()
+    fav_team = models.ForeignKey(Team, on_delete=models.CASCADE)
     '''goals_for = models.IntegerField()
     goals_against = models.IntegerField()
     game_drawn = models.IntegerField()

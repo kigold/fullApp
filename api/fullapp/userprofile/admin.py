@@ -1,7 +1,12 @@
 from django.contrib import admin
-from .models import Profile, User
+from .models import Profile, User, Team
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from rest_framework.response import Response
+from rest_framework.views import APIView
 # Register your models here.
+
+admin.site.register(Profile)
+admin.site.register(Team)
 
 
 class ProfileInline(admin.StackedInline):

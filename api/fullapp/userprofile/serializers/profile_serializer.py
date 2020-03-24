@@ -21,6 +21,6 @@ class ProfileSerializer(serializers.ModelSerializer):
         user = super(ProfileSerializer, self).create(validated_data)
         user.set_password(validated_data['password'])
         user.save()
-        profile = Profile(user.user_id, validated_data['email'], validated_data['nick_name'],
+        profile = Profile(user.user_id, validated_data['email'],
+                          validated_data['nick_name'],
                           validated_data['is_staff'])
-                
