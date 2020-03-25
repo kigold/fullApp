@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import sys
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -85,11 +86,14 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
-    'defaultold': {
+    'default_test': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# set testing db to use sql lite
+if 'test' in sys.argv:
+    DATABASES['default'] = DATABASES['default_test']
 
 
 # Password validation
