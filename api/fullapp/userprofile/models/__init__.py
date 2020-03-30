@@ -1,4 +1,7 @@
-from fullapp.userprofile.models.games import Game
-from fullapp.userprofile.models.profile import Profile
-from fullapp.userprofile.models.teams import Team
-__all__ = ['Game', 'Profile', 'Team']
+from .challenge import Challenge
+from .cup import Cup
+from .cupgame import CupGame
+from .league import League
+from .profile import Profile, User
+from .game import Game
+from .team import Team
