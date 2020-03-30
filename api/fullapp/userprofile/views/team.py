@@ -72,7 +72,7 @@ class TeamDetails(APIView):
     # serializer_class = TeamSerializer
 
     @action(methods=['get'], detail=True)
-    def getted(self, request, pk):
+    def get(self, request, pk):
         queryset = get_object_or_404(Team, pk=pk)
         data = TeamSerializer(queryset).data
         return Response(data)
@@ -83,6 +83,14 @@ class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     _team_service = TeamService()
+
+    @action(detail=False)
+    def fav_team(self, request, pk=None):
+        team = Team.objects.get(pk=3)
+        print(')))))))))))))))))RESPONSE(((((((((((((((((')
+        print(pk)
+        data = TeamSerializer(team, many=False).data
+        return Response(data)
 
     @action(methods=['get'], detail=False)
     def custom_method(self, request):
