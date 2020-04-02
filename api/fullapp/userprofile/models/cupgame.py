@@ -1,11 +1,10 @@
-from .game import Game
-from .cup import Cup
 from django.db import models
+from . import Game, Cup
 
 
 class CupGame(models.Model):
     game = models.ForeignKey(
-        Game, on_delete=models.CASCADE, related_name="game")
+        Game, on_delete=models.CASCADE, related_name="cup_game")
     cup = models.ForeignKey(Cup, on_delete=models.CASCADE)
     stage = models.IntegerField()
     prev_game = models.ForeignKey(
