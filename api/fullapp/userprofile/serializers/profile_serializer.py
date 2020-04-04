@@ -1,26 +1,42 @@
 from rest_framework import serializers
-from ..models import Profile
+from ..models import Profile, User
+from . import UserSerializer
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    user = UserSerializer()
+    #first_name = serializers.CharField()
+    #last_name = serializers.CharField()
+    #password = serializers.CharField()
     fav_team_id = serializers.IntegerField()
     nick_name = serializers.CharField(max_length=50)
     points = serializers.IntegerField()
-    username = serializers.CharField(max_length=50)
-    email = serializers.EmailField()
-    is_staff = serializers.BooleanField()
-    is_active = serializers.BooleanField()
+    #email = serializers.EmailField()
+    #is_staff = serializers.BooleanField()
+    #is_active = serializers.BooleanField()
 
     class Meta:
         model = Profile
-        fields = ("fav_team_id", "nick_name", "points", "username",
-                  "email", "password", "is_staff", "is_active")
+        fields = ["nick_name", "points", "fav_team_id",'user']
+        '''fields = ["nick_name", "points", "fav_team_id", "last_name", 'user',
+                  "email", "password", "is_staff", "is_active", "first_name"]'''
 
     def create(self, validated_data):
-        user = super(ProfileSerializer, self).create(validated_data)
-        user.set_password(validated_data['password'])
-        user.save()
-        profile = Profile(user.user_id, validated_data['email'],
-                          validated_data['nick_name'],
-                          validated_data['is_staff'])
+        user_serializer = UserSerializer(data=validated_data['user'])
+        user_serializer.is_valid()
+        user = user_serializer.save()
+
+        # return super(ProfileSerializer, self).create(validated_data)
+        validated_data['user'] = user
+        profile = Profile.objects.create(**validated_data)
+        return profile
+
+    def update(self, instance, validated_data):
+        user_serializer = UserSerializer(instance.user, data=validated_data['user'],
+                                         partial=True)
+        user_serializer.is_valid()
+        user = user_serializer.save()
+
+        del validated_data['user']
+        profile = super().update(instance, validated_data) 
+        return profile

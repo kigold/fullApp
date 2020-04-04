@@ -1,10 +1,11 @@
 from django.urls import include, path
 from django.conf.urls import url
-from .views import TeamList, TeamDetails, TeamViewSet
+from .views import TeamList, TeamDetails, TeamViewSet, ProfileViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'teams', TeamViewSet, basename='team')
+router.register(r'profile', ProfileViewSet, basename='profile')
 
 '''urlpatterns = [
     path("teams/", TeamList.as_view(), name="teams_list"),
