@@ -6,24 +6,24 @@ from .team import Team
 
 
 class User(AbstractUser):
-    username = models.CharField(blank=True, null=True, max_length=1)
+    username = models.CharField(blank=True, null=True, max_length=20)
     email = models.EmailField('email address', unique=True)
-    pointsss = models.IntegerField()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    # REQUIRED_FIELDS = []
 
     def __str__(self):
         return "{}".format(self.email)
 
 
 class Profile(models.Model):
-    def __init__(self, user_id, email, nick_name, is_staff=False):
+    '''def __init__(self, user_id, email, nick_name, is_staff=False):
         self.user_id = user_id
         self.email = email
         self.nick_name = nick_name
         self.is_staff = is_staff
-        self.is_active = True
+        self.is_active = True'''
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,

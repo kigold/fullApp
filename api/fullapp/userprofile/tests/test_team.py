@@ -9,7 +9,7 @@ class TeamTest(APITestCase):
         Team.objects.create(name="Eyimba", country="Nigeria")
         Team.objects.create(name="PSG", country="France")
 
-    def test_createTeam(self):
+    def test_create_team(self):
         url = reverse('team-list')
         data = {'name': 'Chelsea', 'country': 'England'}
         response = self.client.post(url, data, format='json')
@@ -40,6 +40,6 @@ class TeamTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT,
                          "Status Code")                         
         self.assertFalse(Team.objects.first().name == "Monaco",
-                         "Edited Team Name")       
+                         "Team Name")       
         self.assertEqual(Team.objects.all().count(), 1,
                          "Number of Teams after deleting")
