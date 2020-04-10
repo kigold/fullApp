@@ -26,25 +26,26 @@ class GameTest(APITestCase):
         p1.save()
         p2.is_valid()
         p2.save()
-        g1 = GameSerializer
-        (data={'home_user_id': 1, 'away_user_id': 2,
-               'home_team_id': 1, 'away_team_id': 1, 'home_score': 4,
-               'away_score': 3, 'penalty_shootout': False,
-               'date_played': datetime.datetime.now(),
-               'status': 2})
+        g1 = GameSerializer(
+            data={'home_user_id': 1, 'away_user_id': 2,
+                  'home_team_id': 1, 'away_team_id': 1, 'home_score': 4,
+                  'away_score': 3, 'penalty_shootout': False,
+                  'date_played': datetime.datetime.now(),
+                  'status': 2})
         g1.is_valid()
         g1.save()
-        g2 = GameSerializer
-        (data={'home_user_id': 2, 'away_user_id': 1,
-               'home_team_id': 2, 'away_team_id': 2, 'home_score': 2,
-               'away_score': 1, 'penalty_shootout': False,
-               'date_played': datetime.datetime.now(),
-               'status': 2})
+        g2 = GameSerializer(
+                data={'home_user_id': 2, 'away_user_id': 1,
+                      'home_team_id': 2, 'away_team_id': 2, 'home_score': 2,
+                      'away_score': 1, 'penalty_shootout': False,
+                      'date_played': datetime.datetime.now(),
+                      'status': 2})
         g2.is_valid()
         g2.save()
+        print(Game.objects.all())
 
     def test_create_game_fixtures(self):
-        url = reverse('fixture')
+        url = reverse('game-fixtures')
         data = {'home_user_id': 2, 'away_user_id': 1,
                 'home_team_id': 2, 'away_team_id': 2, 'home_score': 1,
                 'away_score': 1, 'penalty_shootout': False,
@@ -74,7 +75,7 @@ class GameTest(APITestCase):
         self.assertEqual(u1.points, 97, "Winner point decrease by 3")
 
     def test_create_game_played_drawn(self):
-        url = reverse('played')
+        url = reverse('game-fixtures')
         data = {'home_user_id': 2, 'away_user_id': 1,
                 'home_team_id': 2, 'away_team_id': 2, 'home_score': 1,
                 'away_score': 1, 'penalty_shootout': False,
@@ -94,7 +95,7 @@ class GameTest(APITestCase):
                          "users points doesnt change after draw")
 
     def test_edit_game_played_draw(self):
-        url = reverse('fixture', args=[2])
+        url = reverse('game-fixtures', args=[2])
         data = {'home_user_id': 2, 'away_user_id': 1,
                 'home_team_id': 2, 'away_team_id': 2, 'home_score': 1,
                 'away_score': 1, 'penalty_shootout': False,

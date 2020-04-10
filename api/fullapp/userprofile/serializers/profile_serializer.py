@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from ..models import Profile, User
 from . import UserSerializer
+from django.db import transaction
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -20,14 +21,20 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ["nick_name", "points", "fav_team_id", 'user']
 
     def create(self, validated_data):
-        user_serializer = UserSerializer(data=validated_data['user'])
-        user_serializer.is_valid()
-        user = user_serializer.save()
+        try:
+            with transaction.atomic():
+                user_serializer = UserSerializer(data=validated_data['user'])
+                user_serializer.is_valid()
+                user = user_serializer.save()
 
-        # return super(ProfileSerializer, self).create(validated_data)
-        validated_data['user'] = user
-        profile = Profile.objects.create(**validated_data)
-        return profile
+                # return super(ProfileSerializer, self).create(validated_data)
+                validated_data['user'] = user
+                profile = Profile.objects.create(**validated_data)
+                return profile
+        except Exception as e:
+            print("error creatng user")
+            print
+            raise Exception(e)
 
     def update(self, instance, validated_data):
         user_serializer = UserSerializer(instance.user,
