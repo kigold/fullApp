@@ -8,25 +8,32 @@ from rest_framework.decorators import action
 from django.db import transaction
 from ..serializers import GameSerializer
 from ..models import Game, Profile
+from . import PaginationHandlerMixin, BasicPagination
 
 
-class GameViewSet(viewsets.ModelViewSet):
+class GameViewSet(viewsets.ModelViewSet, PaginationHandlerMixin):
 
     # queryset = Game.objects.all()
-    # serializer_class = GameSerializer
-    # TODO remove post and put
+    serializer_class = GameSerializer
+    pagination_class = BasicPagination
 
     @action(methods=['get'], detail=True)
     def get_fixture(self, request, pk):
         queryset = get_object_or_404(Game, pk=pk)
         data = GameSerializer(queryset).data
         return Response(data)
-    
+
     @action(methods=['get'], url_path='fixtures', detail=False)
     def get(self, request):
-        queryset = Game.objects.all()
-        data = GameSerializer(queryset, many=True).data
-        return Response(data)
+        instance = Game.objects.all()
+        page = self.paginate_queryset(instance)
+        if page is not None:
+            serializer_class = self.get_paginated_response(
+                self.serializer_class(page, many=True).data)
+        else:
+            serializer_class = self.serializer_class(instance, many=True)
+        # data = GameSerializer(queryset, many=True).data
+        return Response(serializer_class.data)
 
     @action(methods=['post'], url_path='fixtures', detail=False)
     def addfixtures(self, request):
