@@ -22,6 +22,9 @@ urlpatterns = [url(r'^', include(router.urls)),
                     TeamViewSet.as_view({"post": "deleterange"})),
                path("games/fixtures/<int:pk>",
                     GameViewSet.as_view({"put": "updatefixtures"})),
-               path("games/fixtures/<int:pk>",
-                    GameViewSet.as_view({"get": "getfixtures"})),
+               path("games/fixture/<int:pk>",
+                    GameViewSet.as_view({"get": "get_fixture"})),
                ]
+
+
+#url(r'^articles/(?P\d{2})/(?P\d{4})', 'viewArticles', name = 'articles'
