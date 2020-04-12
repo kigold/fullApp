@@ -8,10 +8,10 @@ from rest_framework.decorators import action
 from django.db import transaction
 from ..serializers import GameSerializer
 from ..models import Game, Profile
-from . import PaginationHandlerMixin, BasicPagination
+from . import BasicPagination
 
 
-class GameViewSet(viewsets.ModelViewSet, PaginationHandlerMixin):
+class GameViewSet(viewsets.ModelViewSet):
 
     # queryset = Game.objects.all()
     serializer_class = GameSerializer
@@ -26,6 +26,7 @@ class GameViewSet(viewsets.ModelViewSet, PaginationHandlerMixin):
     @action(methods=['get'], url_path='fixtures', detail=False)
     def get(self, request):
         instance = Game.objects.all()
+        # .order_by('pk')
         page = self.paginate_queryset(instance)
         if page is not None:
             serializer_class = self.get_paginated_response(

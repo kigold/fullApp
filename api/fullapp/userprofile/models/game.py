@@ -37,8 +37,7 @@ class Game(models.Model):
     status = models.IntegerField(
         choices=Game_Status.choices,
         default=Game_Status.Fixtured)
-    '''status = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(3)],
-        choices=GAME_STATUS,
-        default=1
-    )'''
+
+    class Meta:
+        ordering = ['-pk']
+        # ordering = ['-away_user__points']
