@@ -87,8 +87,6 @@ class TeamViewSet(viewsets.ModelViewSet):
     @action(detail=False)
     def fav_team(self, request, pk=None):
         team = Team.objects.get(pk=3)
-        print(')))))))))))))))))RESPONSE(((((((((((((((((')
-        print(pk)
         data = TeamSerializer(team, many=False).data
         return Response(data)
 

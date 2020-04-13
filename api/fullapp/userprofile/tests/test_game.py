@@ -45,8 +45,6 @@ class GameTest(APITestCase):
 
     def test_create_game_fixtures(self):
         url = reverse('game-addfixtures')
-        print("````````````WORKING ÙRL``````````````````")
-        print(url)
         data = {'home_user_id': 2, 'away_user_id': 1,
                 'home_team_id': 2, 'away_team_id': 2, 'home_score': 1,
                 'away_score': 1, 'penalty_shootout': False,
@@ -66,6 +64,8 @@ class GameTest(APITestCase):
                 'status': 2}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        print("``````````````````````````````Testing Response````````````````````")
+        print(response.data['id'])
         self.assertEqual(Game.objects.count(), 3,
                          "The Number of created games")
         self.assertEqual(Game.objects.latest("pk").status, 2,
@@ -196,18 +196,18 @@ class GameTest(APITestCase):
         # url = reverse('game-fixtures')
         url = "/games/fixtures/"
         response = self.client.get(url)
-        data = response.data
+        data = response.data['results']
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(data), 2)
-        self.assertEqual(data[0]['home_score'], 4)
-        self.assertEqual(data[0]['away_score'], 3)
-        self.assertEqual(data[0]['home_user']['nick_name'],
-                         "admino")
-        self.assertEqual(data[0]['home_user']['user']
-                         ['email'], "admin@yahoo.com")
+        self.assertEqual(data[1]['home_score'], 4)
+        self.assertEqual(data[1]['away_score'], 3)
         self.assertEqual(data[1]['home_user']['nick_name'],
+                         "admino")
+        self.assertEqual(data[1]['home_user']['user']
+                         ['email'], "admin@yahoo.com")
+        self.assertEqual(data[0]['home_user']['nick_name'],
                          "ninetail")
-        self.assertEqual(data[1]['home_user']['user']
+        self.assertEqual(data[0]['home_user']['user']
                          ['email'], "naruto@konoha.com")
-        self.assertEqual(data[1]['home_user']['user']
+        self.assertEqual(data[0]['home_user']['user']
                          ['first_name'], "naruto")

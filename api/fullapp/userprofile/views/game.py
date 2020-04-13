@@ -8,6 +8,7 @@ from rest_framework.decorators import action
 from django.db import transaction
 from ..serializers import GameSerializer
 from ..models import Game, Profile
+from ..service import GameService
 from . import BasicPagination
 
 
@@ -50,7 +51,7 @@ class GameViewSet(viewsets.ModelViewSet):
                 # calculate users points if match is played
                 if 'status' in request.data:
                     if request.data['status'] == 2:
-                        GameViewSet.compute_user_points(
+                        GameService.compute_user_points(
                             request.data['home_user_id'],
                             request.data['away_user_id'],
                             request.data['home_score'],
@@ -79,35 +80,11 @@ class GameViewSet(viewsets.ModelViewSet):
                 # calculate users points if match is played
                 if 'status' in request.data:
                     if request.data['status'] == 2:
-                        GameViewSet.compute_user_points(
+                        GameService.compute_user_points(
                             request.data['home_user_id'],
                             request.data['away_user_id'],
                             request.data['home_score'],
-                            request.data['away_score'])
+                            request.data['away_score']),
                 return Response(serializer_class.data)
         except Exception as e:
             raise e
-
-    def compute_user_points(user1_id, user2_id, user1_score,
-                            user2_score):
-        user1 = Profile.objects.get(pk=user1_id)
-        user2 = Profile.objects.get(pk=user2_id)
-        if(user1_score < user2_score and user1.points > user2.points):
-            user2.points = user2.points + 3
-            user1.points = user1.points - 3
-            user2.save()
-            user1.save()
-        if(user2_score < user1_score and user2.points > user1.points):
-            user1.points = user1.points + 3
-            user2.points = user2.points - 3
-            user2.save()
-            user1.save()
-
-
-
-
-
-
-
-                
-                

@@ -8,7 +8,8 @@ class CupGame(models.Model):
     cup = models.ForeignKey(Cup, on_delete=models.CASCADE)
     stage = models.IntegerField()
     prev_game = models.ForeignKey(
-        Game, on_delete=models.CASCADE, related_name="prev_game")
+        Game, on_delete=models.CASCADE, related_name="prev_game",
+        null=True, blank=True)
 
     '''class Meta:
         app_label = 'userprofile'

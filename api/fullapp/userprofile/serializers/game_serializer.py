@@ -24,8 +24,6 @@ class GameSerializer(serializers.ModelSerializer):
 
     def validate_for_played_game(self):
         data = self.initial_data
-        print("```````````````````````````````validationg ``````````````````````")
-        print(data)
         required_fields = ['home_score', 'away_score',
                            'penalty_shootout', 'date_played']
         errors = []
