@@ -38,6 +38,9 @@ class Profile(models.Model):
     nick_name = models.CharField(max_length=50, null=False)
     points = models.IntegerField()
 
+    class Meta:
+        ordering = ['pk']
+
     '''class Meta:
         app_label = 'userprofile'
         db_table = 'fullapp_profile'

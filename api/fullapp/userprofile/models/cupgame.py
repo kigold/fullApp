@@ -11,6 +11,9 @@ class CupGame(models.Model):
         Game, on_delete=models.CASCADE, related_name="prev_game",
         null=True, blank=True)
 
+    class Meta:
+        ordering = ['-pk']
+
     '''class Meta:
         app_label = 'userprofile'
         db_table = 'fullapp_cupgame'

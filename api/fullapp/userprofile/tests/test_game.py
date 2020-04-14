@@ -3,45 +3,13 @@ from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
 from ..models import Game, Team, Profile
 from ..serializers import GameSerializer, ProfileSerializer
+from .setup import set_test_data
 import datetime
 
 
 class GameTest(APITestCase):
     def setUp(self):
-        Team.objects.create(name="Eyimba", country="Nigeria")
-        Team.objects.create(name="PSG", country="France")
-        p1 = ProfileSerializer(
-            data={'nick_name': 'admino', 'points': 100, 'fav_team_id': 1,
-                  'user': {'username': 'admin', 'email': 'admin@yahoo.com',
-                           'is_staff': True, 'first_name': 'admin',
-                           'last_name': 'badoo',
-                           'is_active': True, 'password': 'P@ssw0rd'}})
-        p2 = ProfileSerializer(
-            data={'nick_name': 'ninetail', 'points': 23, 'fav_team_id': 1,
-                  'user': {'username': 'naruto', 'email': 'naruto@konoha.com',
-                           'is_staff': False, 'first_name': 'naruto',
-                           'last_name': 'uzumaki',
-                           'is_active': True, 'password': 'P@ssw0rd'}})
-        p1.is_valid()
-        p1.save()
-        p2.is_valid()
-        p2.save()
-        g1 = GameSerializer(
-            data={'home_user_id': 1, 'away_user_id': 2,
-                  'home_team_id': 1, 'away_team_id': 1, 'home_score': 4,
-                  'away_score': 3, 'penalty_shootout': False,
-                  'date_played': datetime.datetime.now(),
-                  'status': 2})
-        g1.is_valid()
-        g1.save()
-        g2 = GameSerializer(
-                data={'home_user_id': 2, 'away_user_id': 1,
-                      'home_team_id': 2, 'away_team_id': 2, 'home_score': 2,
-                      'away_score': 1, 'penalty_shootout': False,
-                      'date_played': datetime.datetime.now(),
-                      'status': 2})
-        g2.is_valid()
-        g2.save()
+        set_test_data()
 
     def test_create_game_fixtures(self):
         url = reverse('game-addfixtures')
@@ -63,9 +31,7 @@ class GameTest(APITestCase):
                 'date_played': datetime.datetime.now(),
                 'status': 2}
         response = self.client.post(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        print("``````````````````````````````Testing Response````````````````````")
-        print(response.data['id'])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)        
         self.assertEqual(Game.objects.count(), 3,
                          "The Number of created games")
         self.assertEqual(Game.objects.latest("pk").status, 2,
@@ -104,8 +70,6 @@ class GameTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # url = reverse('game-updatefixtures', args=[2])
         url = "/games/fixtures/3"
-        print("````````````ÙRL``````````````````")
-        print(url)
         data = {'home_user_id': 2, 'away_user_id': 1,
                 'home_team_id': 2, 'away_team_id': 2, 'home_score': 1,
                 'away_score': 1, 'penalty_shootout': False,
@@ -152,9 +116,6 @@ class GameTest(APITestCase):
         # url = reverse('game-updatefixtures', args=[2])
         url = "/games/fixtures/2"
         response = self.client.put(url, data, format='json')
-        print("``````````````Ùsers SCore````````````````````")
-        
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         self.assertEqual(response.data['error'], "Game already played, cannot update",
