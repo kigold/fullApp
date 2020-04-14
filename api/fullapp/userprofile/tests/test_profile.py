@@ -38,22 +38,26 @@ class ProfileTest(APITestCase):
                          "The Number of created profile")
         self.assertEqual(Profile.objects.latest('pk').user.email,
                          'hinata@konoha.com')
+        self.assertEqual(Profile.objects.latest('pk').nick_name,
+                         'naruto bae')
+        self.assertEqual(Profile.objects.latest('pk').user.first_name,
+                         'hinata')
 
     def test_edit_profile(self):
         url = reverse('profile-detail', args=[2])
-        data = {'fav_team_id': 1, 'nick_name': 'chan', 'points': 70, 
+        data = {'fav_team_id': 1, 'nick_name': 'chan', 'points': 70,
                 'user': {'username': 'sakura', 'email': 'sakura@konoha.com',
                          'is_staff': False, 'first_name': 'sakura',
                          'last_name': 'chan',
                          'is_active': True, 'password': 'P@ssw0rd'}}
         response = self.client.put(url, data, format='json')
-        
+
         self.assertEqual(Profile.objects.get(pk=2).nick_name, 'chan',
                          "Edited Nick Name")
         self.assertEqual(response.status_code, status.HTTP_200_OK,
                          "Status Code")
-        self.assertEqual(Profile.objects.get(pk=2).user.email, 'sakura@konoha.com',
-                         "Edited Email")
+        self.assertEqual(Profile.objects.get(pk=2).user.email,
+                         'sakura@konoha.com', "Edited Email")
         self.assertEqual(Profile.objects.get(pk=2).points, 70,
                          "Edited Points")
 
@@ -69,13 +73,15 @@ class ProfileTest(APITestCase):
         self.assertEqual(response.data['results'][1]['nick_name'], "kaycee")
         self.assertEqual(response.data['results'][1]['user']['email'],
                          "naruto@konoha.com")
+        self.assertEqual(response.data['results'][1]['user']['first_name'],
+                         "naruto")
 
     def test_delete_profile(self):
         url = reverse('profile-detail', args=[1])
         response = self.client.delete(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT,
-                         "Status Code")                     
+                         "Status Code")
         self.assertFalse(Profile.objects.first().user.first_name == "admin",
                          "Profile Name")
         self.assertEqual(Profile.objects.all().count(), 1,
