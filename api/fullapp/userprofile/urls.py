@@ -10,6 +10,8 @@ router.register(r'profile', ProfileViewSet, basename='profile')
 router.register(r'games', GameViewSet, basename='game')
 router.register(r'cup', CupViewSet, basename='cup')
 router.register(r'cupgames', CupGameViewSet, basename='cupgame')
+router.register(r'league', LeagueViewSet, basename='league')
+router.register(r'leaguegames', LeagueGameViewSet, basename='leaguegame')
 
 '''urlpatterns = [
     path("teams/", TeamList.as_view(), name="teams_list"),

@@ -7,3 +7,5 @@ from .profile import ProfileViewSet
 from .game import GameViewSet
 from .cup import CupViewSet
 from .cupgame import CupGameViewSet
+from .league import LeagueViewSet
+from .leaguegame import LeagueGameViewSet

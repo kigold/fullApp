@@ -5,7 +5,7 @@ from ..models import League
 class LeagueSerializer(serializers.ModelSerializer):
     season = serializers.IntegerField()
     title = serializers.CharField()
-    is_two_leg = serializers.BooleanField()
+    is_two_leg = serializers.BooleanField(required=False)
 
     class Meta:
         model = League
