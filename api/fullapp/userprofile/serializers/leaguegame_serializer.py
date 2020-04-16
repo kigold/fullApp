@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.db import transaction
 from ..models import LeagueGame, League
 from ..service import GameService
@@ -10,7 +10,7 @@ class LeagueGameSerializer(serializers.ModelSerializer):
     game = GameSerializer(required=True)
     game_id = serializers.IntegerField(required=False)
     league = LeagueSerializer(read_only=True)
-    league_id = serializers.IntegerField(required=False)
+    league_id = serializers.IntegerField()
 
     class Meta:
         model = LeagueGame

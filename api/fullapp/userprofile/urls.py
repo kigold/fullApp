@@ -12,6 +12,7 @@ router.register(r'cup', CupViewSet, basename='cup')
 router.register(r'cupgames', CupGameViewSet, basename='cupgame')
 router.register(r'league', LeagueViewSet, basename='league')
 router.register(r'leaguegames', LeagueGameViewSet, basename='leaguegame')
+router.register(r'challenge', ChallengeViewSet, basename='challenge')
 
 '''urlpatterns = [
     path("teams/", TeamList.as_view(), name="teams_list"),

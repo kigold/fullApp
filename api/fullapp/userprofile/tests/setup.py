@@ -1,7 +1,8 @@
 import datetime
-from ..models import Game, Team, Profile, Cup, CupGame, League
+from ..models import Game, Team, Profile, Cup, CupGame, League, Challenge
 from ..serializers import GameSerializer, ProfileSerializer,\
-    CupGameSerializer, LeagueSerializer, LeagueGameSerializer
+    CupGameSerializer, LeagueSerializer, LeagueGameSerializer,\
+    ChallengeSerializer
 
 
 def set_test_data():
@@ -76,6 +77,27 @@ def set_league_data():
     g1.save()
     g2 = LeagueGameSerializer(
         data={'league_id': 1,
+              'game': {'home_user_id': 1, 'away_user_id': 2,
+                       'home_team_id': 1, 'away_team_id': 1, 'home_score': 3,
+                       'away_score': 1, 'penalty_shootout': False,
+                       'date_played': datetime.datetime.now(),
+                       'status': 2}})
+    g2.is_valid()
+    g2.save()
+
+
+def set_challenge_data():
+    g1 = ChallengeSerializer(
+        data={'challenged_id': 1, 'challenger_id': 2,
+              'game': {'home_user_id': 1, 'away_user_id': 2,
+                       'home_team_id': 1, 'away_team_id': 1, 'home_score': 5,
+                       'away_score': 3, 'penalty_shootout': False,
+                       'date_played': datetime.datetime.now(),
+                       'status': 2}})
+    g1.is_valid()
+    g1.save()
+    g2 = ChallengeSerializer(
+        data={'challenger_id': 1, 'challenged_id': 2,
               'game': {'home_user_id': 1, 'away_user_id': 2,
                        'home_team_id': 1, 'away_team_id': 1, 'home_score': 3,
                        'away_score': 1, 'penalty_shootout': False,
