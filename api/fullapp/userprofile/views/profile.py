@@ -7,9 +7,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from ..serializers import ProfileSerializer
 from ..models import Profile
+from . import CustomJsonRender
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
 
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    renderer_classes = (CustomJsonRender,)

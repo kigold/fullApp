@@ -9,7 +9,7 @@ from django.db import transaction
 from ..serializers import GameSerializer
 from ..models import Game, Profile
 from ..service import GameService
-from . import BasicPagination
+from . import BasicPagination, CustomJsonRender
 
 
 class GameViewSet(viewsets.ModelViewSet):
@@ -17,6 +17,7 @@ class GameViewSet(viewsets.ModelViewSet):
     # queryset = Game.objects.all()
     serializer_class = GameSerializer
     pagination_class = BasicPagination
+    renderer_classes = (CustomJsonRender,)
 
     @action(methods=['get'], detail=True)
     def get_fixture(self, request, pk):
