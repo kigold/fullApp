@@ -10,3 +10,4 @@ from .cupgame import CupGameViewSet
 from .league import LeagueViewSet
 from .leaguegame import LeagueGameViewSet
 from .challenge import ChallengeViewSet
+from .custom_auth import CustomAuthToken

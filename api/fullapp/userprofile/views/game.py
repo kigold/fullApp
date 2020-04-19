@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions, mixins, generics
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from django.db import transaction
 from ..serializers import GameSerializer
 from ..models import Game, Profile
@@ -17,6 +18,7 @@ class GameViewSet(viewsets.ModelViewSet):
     # queryset = Game.objects.all()
     serializer_class = GameSerializer
     pagination_class = BasicPagination
+    # permission_classes = [IsAuthenticated]
     renderer_classes = (CustomJsonRender,)
 
     @action(methods=['get'], detail=True)
