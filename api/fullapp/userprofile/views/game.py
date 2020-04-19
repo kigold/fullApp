@@ -10,16 +10,16 @@ from django.db import transaction
 from ..serializers import GameSerializer
 from ..models import Game, Profile
 from ..service import GameService
-from . import BasicPagination, CustomJsonRender
+# from . import BasicPagination, CustomJsonRender
 
 
 class GameViewSet(viewsets.ModelViewSet):
 
     # queryset = Game.objects.all()
     serializer_class = GameSerializer
-    pagination_class = BasicPagination
+    # pagination_class = BasicPagination
     # permission_classes = [IsAuthenticated]
-    renderer_classes = (CustomJsonRender,)
+    # renderer_classes = (CustomJsonRender,)
 
     @action(methods=['get'], detail=True)
     def get_fixture(self, request, pk):
@@ -29,6 +29,8 @@ class GameViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], url_path='fixtures', detail=False)
     def get(self, request):
+        print("``````Ìnside Game``````````````")
+        print(request.user)
         instance = Game.objects.all()
         # .order_by('pk')
         page = self.paginate_queryset(instance)

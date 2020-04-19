@@ -1,5 +1,4 @@
-""" from rest_framework.pagination import PageNumberPagination
-# from . import PaginationHandlerMixin
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import exception_handler
 
@@ -56,4 +55,3 @@ def custom_exception_handler(exc, context):
     response.error = error
 
     return response
- """

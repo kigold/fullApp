@@ -7,11 +7,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from ..serializers import LeagueGameSerializer
 from ..models import League, LeagueGame
-from . import CustomJsonRender
+# from . import CustomJsonRender
 
 
 class LeagueGameViewSet(viewsets.ModelViewSet):
 
     queryset = LeagueGame.objects.all()
     serializer_class = LeagueGameSerializer
-    renderer_classes = (CustomJsonRender,)
+    # renderer_classes = (CustomJsonRender,)

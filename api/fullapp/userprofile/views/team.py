@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from ..serializers import TeamSerializer
 from ..models import Team
 from ..service import TeamService
-from . import CustomJsonRender
+# from . import CustomJsonRender
 
 
 '''class TeamList(mixins.ListModelMixin,
@@ -83,7 +83,7 @@ class TeamViewSet(viewsets.ModelViewSet):
 
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
-    renderer_classes = (CustomJsonRender,)
+    # renderer_classes = (CustomJsonRender,)
     _team_service = TeamService()
 
     @action(detail=False)

@@ -8,14 +8,14 @@ from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from ..serializers import ProfileSerializer
 from ..models import Profile, User
-from . import CustomJsonRender
+# from . import CustomJsonRender
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
 
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    renderer_classes = (CustomJsonRender,)
+    # renderer_classes = (CustomJsonRender,)
 
 
     @action(methods=['post'], detail=False)

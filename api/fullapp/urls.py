@@ -20,7 +20,13 @@ from django.conf.urls import url
 from django.urls import include, path
 from rest_framework import routers
 from .userprofile import views
+from .userprofile.views import CustomJwtAuthTokenView
 from .userprofile import views as core_views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
 
 
 urlpatterns = [
@@ -38,6 +44,11 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls',
          namespace='rest_framework')),
-    url(r'^signup/$', core_views.signup, name='signup'),
-    url('', include('fullapp.userprofile.urls'))
+    # url(r'^signup/$', core_views.signup, name='signup'),
+    url('', include('fullapp.userprofile.urls')),
+    path('api/token/', CustomJwtAuthTokenView.as_view(),
+         name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(),
+         name='token_refresh'),
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]

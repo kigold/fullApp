@@ -7,11 +7,11 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from ..serializers import CupSerializer
 from ..models import Cup
-from . import CustomJsonRender
+# from . import CustomJsonRender
 
 
 class CupViewSet(viewsets.ModelViewSet):
 
     queryset = Cup.objects.all()
     serializer_class = CupSerializer
-    renderer_classes = (CustomJsonRender,)
+    # renderer_classes = (CustomJsonRender,)
