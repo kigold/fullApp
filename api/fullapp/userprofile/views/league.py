@@ -5,13 +5,13 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions, mixins, generics
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from ..serializers import CupSerializer
-from ..models import Cup
+from ..serializers import LeagueSerializer
+from ..models import League
 # from . import CustomJsonRender
 
 
-class CupViewSet(viewsets.ModelViewSet):
+class LeagueViewSet(viewsets.ModelViewSet):
 
-    queryset = Cup.objects.all()
-    serializer_class = CupSerializer
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer
     # renderer_classes = (CustomJsonRender,)

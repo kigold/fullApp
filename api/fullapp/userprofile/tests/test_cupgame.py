@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
-from ..models import Game, Team, Profile
+from ..models import Game, Team, Profile, Cup
 import datetime
 from ..serializers import GameSerializer, ProfileSerializer, CupSerializer,\
     CupGameSerializer

@@ -1,8 +1,9 @@
 from rest_framework import serializers
+from django.shortcuts import render, get_object_or_404
 from rest_framework.views import status
 from django.urls import reverse
 from django.db import transaction
-from ..models import CupGame
+from ..models import CupGame, Cup
 from ..service import GameService
 from . import GameSerializer, CupSerializer
 
@@ -22,6 +23,8 @@ class CupGameSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         try:
             with transaction.atomic():
+                cup = get_object_or_404(Cup,
+                                        pk=validated_data['cup_id'])
                 game_serializer = GameSerializer(data=validated_data['game'])
                 if validated_data['game']['status']:
                     if validated_data['game']['status'] is 2:
@@ -41,7 +44,7 @@ class CupGameSerializer(serializers.ModelSerializer):
                 return cupgame
         except Exception as e:
             raise serializers.ValidationError(
-                detail="Game already played cannot update")
+                detail=e)
 
     def update(self, instance, validated_data):
         if instance.game.status is 2:

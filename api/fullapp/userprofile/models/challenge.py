@@ -14,3 +14,6 @@ class Challenge(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True,
                              related_name="challenge_game")
     proposed_date = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-pk']
