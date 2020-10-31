@@ -27,11 +27,11 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$store.dispatch(login, this.loginData).then(() => {
-        /*this.$router.push({
-          name: 'teams'
-        })*/
+    async login() {
+      console.log("Attempting login")
+      await this.$store.dispatch(login, this.loginData)
+      this.$router.push({
+        name: 'teams'
       })
     }
   }
